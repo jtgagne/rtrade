@@ -2,6 +2,8 @@
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Linq;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 
 namespace RobinHood
 {
@@ -13,7 +15,7 @@ namespace RobinHood
         {
             try
             {
-                Session = new RobinHood("emailOrUserName", "password");
+                Session = new RobinHood();
                 Session.Authenticate();
                 Session.LoadPositions();
 
@@ -21,6 +23,11 @@ namespace RobinHood
                 {
                     Console.WriteLine(position);
                 }
+
+                Position p = Session.Positions[0];
+                var result = Session.Client.GetAsync(p.Instrument).Result;
+                string resultString = result.Content.ReadAsStringAsync().Result;
+                Instrument instrument = JsonConvert.DeserializeObject<Instrument>(resultString);
 
             }
             catch(Exception e)

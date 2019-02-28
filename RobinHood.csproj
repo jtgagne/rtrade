@@ -46,6 +46,7 @@
     <Compile Include="Urls.cs" />
     <Compile Include="LoginRequest.cs" />
     <Compile Include="Position.cs" />
+    <Compile Include="Instrument.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

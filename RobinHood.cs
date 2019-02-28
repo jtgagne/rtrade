@@ -19,7 +19,7 @@ namespace RobinHood
         /// <summary>
         /// Gets the OAuth token.
         /// </summary>
-        /// <value>The OA uth token.</value>
+        /// <value>The OAuth token.</value>
         private Token OAuthToken { get; set; }
 
         /// <summary>
@@ -30,14 +30,8 @@ namespace RobinHood
 
         public List<Position> Positions { get; private set; } = new List<Position>();
 
-        public RobinHood(string user, string password)
+        public RobinHood()
         {
-            this.Login = new LoginRequest
-            {
-                User = user,
-                Password = password
-            };
-
             this.Client = new HttpClient();
             this.Client.DefaultRequestHeaders.Accept.Clear();
             this.Client.DefaultRequestHeaders.Accept.Add(new System.Net.Http.Headers.MediaTypeWithQualityHeaderValue("application/json"));
@@ -51,6 +45,7 @@ namespace RobinHood
                 if (!IsPreviousTokenValid())
                 {
                     Console.WriteLine("Creating a new access token using the provided credentials");
+                    PromptCredentials();
                     var content = new FormUrlEncodedContent(this.Login.ToDictionary());
                     HttpResponseMessage response = this.Client.PostAsync(Urls.Login, content).Result;
 
@@ -68,6 +63,17 @@ namespace RobinHood
             }
         }
 
+        private void PromptCredentials()
+        {
+            this.Login = new LoginRequest();
+            Console.WriteLine("Enter user name or email:");
+            Console.Write(">>>");
+            Login.User = Console.ReadLine();
+            Console.WriteLine("Enter password:");
+            Console.Write(">>>");
+            Login.Password  = Console.ReadLine();
+        }
+
         private bool IsPreviousTokenValid()
         {
             bool valid = true;
@@ -78,8 +84,12 @@ namespace RobinHood
                 this.Client.DefaultRequestHeaders.Authorization =
                     new System.Net.Http.Headers.AuthenticationHeaderValue(this.OAuthToken.TokenType, this.OAuthToken.AccessToken);
 
+                // Exisiting token is invalid or expired.
                 HttpResponseMessage response = this.Client.GetAsync(Urls.Positions).Result;
-
+                if(response.StatusCode == System.Net.HttpStatusCode.Unauthorized)
+                {
+                    valid = false;
+                }
             }
             catch(Exception e)
             {
