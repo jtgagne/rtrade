@@ -48,6 +48,10 @@
     <Compile Include="Models\Quote.cs" />
     <Compile Include="Models\StockInfo.cs" />
     <Compile Include="Models\Token.cs" />
+    <Compile Include="Models\Account.cs" />
+    <Compile Include="Models\InstantEligibility.cs" />
+    <Compile Include="Models\MarginBalances.cs" />
+    <Compile Include="Models\Model.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
