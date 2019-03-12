@@ -1,0 +1,24 @@
+﻿<?xml version='1.0' encoding='utf-8'?>
+<SettingsFile xmlns="http://schemas.microsoft.com/VisualStudio/2004/01/settings" CurrentProfile="(Default)" GeneratedClassNamespace="RobinHood.Properties" GeneratedClassName="Settings">
+  <Profiles />
+  <Settings>
+    <Setting Name="BaseWebsite" Type="System.String" Scope="User">
+      <Value Profile="(Default)">https://api.robinhood.com</Value>
+    </Setting>
+    <Setting Name="LogonEndpoint" Type="System.String" Scope="User">
+      <Value Profile="(Default)">/oauth2/token/</Value>
+    </Setting>
+    <Setting Name="WatchListsEndpoint" Type="System.String" Scope="User">
+      <Value Profile="(Default)">/watchlists/</Value>
+    </Setting>
+    <Setting Name="AccountEndpoint" Type="System.String" Scope="User">
+      <Value Profile="(Default)">/accounts/</Value>
+    </Setting>
+    <Setting Name="PostionsEndpoint" Type="System.String" Scope="User">
+      <Value Profile="(Default)">/positions/</Value>
+    </Setting>
+    <Setting Name="FundamentalsEndpoint" Type="System.String" Scope="User">
+      <Value Profile="(Default)">/fundamentals/</Value>
+    </Setting>
+  </Settings>
+</SettingsFile>
