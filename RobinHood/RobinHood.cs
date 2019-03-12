@@ -4,6 +4,7 @@ using System.Net.Http;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
+using RobinHood.Models;
 
 namespace RobinHood
 {
@@ -33,6 +34,8 @@ namespace RobinHood
         /// </summary>
         /// <value>The positions.</value>
         public List<Position> Positions { get; private set; } = new List<Position>();
+
+        public List<Account> Accounts { get; set; } = new List<Account>();
 
         public RobinHood()
         {
@@ -122,6 +125,23 @@ namespace RobinHood
             }
         }
 
+        public void LoadAccount()
+        {
+            try
+            {
+                HttpResponseMessage response = this.Client.GetAsync(Urls.Accounts).Result;
+                var responseString = response.Content.ReadAsStringAsync().Result;
+                Dictionary<string, List<Account>> keyValuePairs = JsonConvert.DeserializeObject<Dictionary<string, List<Account>>>(responseString);
+
+                Console.WriteLine("WARNING: NOT CHECKING FOR ALL ACCOUNTS");
+                this.Accounts.AddRange(keyValuePairs["results"]);
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
+            }
+        }
+
         public StockInfo GetStockInfo(string symbol)
         {
             StockInfo info = new StockInfo();
@@ -133,6 +153,11 @@ namespace RobinHood
             info = JsonConvert.DeserializeObject<StockInfo>(responseString);
 
             return info;
+        }
+
+        public void LoadList()
+        {
+
         }
     }
 }

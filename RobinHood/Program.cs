@@ -18,6 +18,7 @@ namespace RobinHood
                 Session = new RobinHood();
                 Session.Authenticate();
                 Session.LoadPositions();
+                Session.LoadAccount();
 
                 foreach(Position position in Session.Positions)
                 {
