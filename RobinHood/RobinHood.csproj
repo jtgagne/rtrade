@@ -52,12 +52,17 @@
     <Compile Include="Models\InstantEligibility.cs" />
     <Compile Include="Models\MarginBalances.cs" />
     <Compile Include="Models\Model.cs" />
+    <Compile Include="CryptoModels\CryptoPortfolio.cs" />
+    <Compile Include="CryptoModels\Currency.cs" />
+    <Compile Include="CryptoModels\Holding.cs" />
+    <Compile Include="CryptoModels\CostBases.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Models\" />
+    <Folder Include="CryptoModels\" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
 </Project>

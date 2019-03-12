@@ -3,6 +3,12 @@ namespace RobinHood
 {
     public class Urls
     {
+        public const string CryptoRoot = "https://nummus.robinhood.com";
+
+        public const string CryptoPortfolios = "/portfolios/";
+
+        public const string CryptoHoldings = "/holdings/";
+
         public const string Root = "https://api.robinhood.com";
 
         public const string Login = "/oauth2/token/";

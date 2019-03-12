@@ -19,6 +19,8 @@ namespace RobinHood
                 Session.Authenticate();
                 Session.LoadPositions();
                 Session.LoadAccount();
+                Session.LoadCryptoPositions();
+                Session.LoadHoldings();
 
                 foreach(Position position in Session.Positions)
                 {

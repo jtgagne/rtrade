@@ -4,6 +4,7 @@ using System.Net.Http;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
+using RobinHood.CryptoModels;
 using RobinHood.Models;
 
 namespace RobinHood
@@ -16,6 +17,13 @@ namespace RobinHood
         /// </summary>
         /// <value>The client.</value>
         public HttpClient Client { get; set; }
+
+        /// <summary>
+        /// The HttpClient used to make connections to the robinhood crypto API. All requests made
+        /// should be relative to the API BASE URL.
+        /// </summary>
+        /// <value>The client.</value>
+        public HttpClient CryptoClient { get; set; }
 
         /// <summary>
         /// Gets the OAuth token.
@@ -37,12 +45,21 @@ namespace RobinHood
 
         public List<Account> Accounts { get; set; } = new List<Account>();
 
+        public List<CryptoPortfolio> CryptoPortfolios { get; set; } = new List<CryptoPortfolio>();
+
+        public List<Holding> CryptoHoldings { get; set; } = new List<Holding>();
+
         public RobinHood()
         {
             this.Client = new HttpClient();
             this.Client.DefaultRequestHeaders.Accept.Clear();
             this.Client.DefaultRequestHeaders.Accept.Add(new System.Net.Http.Headers.MediaTypeWithQualityHeaderValue("application/json"));
             this.Client.BaseAddress = new Uri(Urls.Root);
+
+            this.CryptoClient = new HttpClient();
+            this.CryptoClient.DefaultRequestHeaders.Accept.Clear();
+            this.CryptoClient.DefaultRequestHeaders.Accept.Add(new System.Net.Http.Headers.MediaTypeWithQualityHeaderValue("application/json"));
+            this.CryptoClient.BaseAddress = new Uri(Urls.CryptoRoot);
         }
 
         public async void Authenticate()
@@ -89,6 +106,9 @@ namespace RobinHood
                 this.OAuthToken = Token.LoadFromFile();
 
                 this.Client.DefaultRequestHeaders.Authorization =
+                    new System.Net.Http.Headers.AuthenticationHeaderValue(this.OAuthToken.TokenType, this.OAuthToken.AccessToken);
+
+                this.CryptoClient.DefaultRequestHeaders.Authorization =
                     new System.Net.Http.Headers.AuthenticationHeaderValue(this.OAuthToken.TokenType, this.OAuthToken.AccessToken);
 
                 // Exisiting token is invalid or expired.
@@ -155,9 +175,39 @@ namespace RobinHood
             return info;
         }
 
-        public void LoadList()
+        public void LoadCryptoPositions()
         {
+            try
+            {
+                HttpResponseMessage response = this.CryptoClient.GetAsync(Urls.CryptoPortfolios).Result;
+                var responseString = response.Content.ReadAsStringAsync().Result;
+                Dictionary<string, List<CryptoPortfolio>> keyValuePairs = JsonConvert.DeserializeObject<Dictionary<string, List<CryptoPortfolio>>>(responseString);
 
+                Console.WriteLine("WARNING: NOT CHECKING FOR ALL CRYPTO POSITIONS");
+                this.CryptoPortfolios.AddRange(keyValuePairs["results"]);
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
+            }
         }
+
+        public void LoadHoldings()
+        {
+            try
+            {
+                HttpResponseMessage response = this.CryptoClient.GetAsync(Urls.CryptoHoldings).Result;
+                var responseString = response.Content.ReadAsStringAsync().Result;
+                Dictionary<string, List<Holding>> keyValuePairs = JsonConvert.DeserializeObject<Dictionary<string, List<Holding>>>(responseString);
+
+                Console.WriteLine("WARNING: NOT CHECKING FOR ALL HOLDINGS");
+                this.CryptoHoldings.AddRange(keyValuePairs["results"]);
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
+            }
+        }
+
     }
 }
