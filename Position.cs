@@ -55,6 +55,9 @@ namespace RobinHood
         [JsonProperty(PropertyName = "quantity")]
         public double Quantity { get; set; }
 
+        [JsonIgnore]
+        public StockInfo Stock { get; set; }
+
         public Position()
         {
         }

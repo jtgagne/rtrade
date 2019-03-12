@@ -28,6 +28,10 @@ namespace RobinHood
         /// <value>The login.</value>
         private LoginRequest Login { get; set; }
 
+        /// <summary>
+        /// Gets the positions.
+        /// </summary>
+        /// <value>The positions.</value>
         public List<Position> Positions { get; private set; } = new List<Position>();
 
         public RobinHood()
@@ -116,6 +120,19 @@ namespace RobinHood
             {
                 Console.WriteLine(e.Message);
             }
+        }
+
+        public StockInfo GetStockInfo(string symbol)
+        {
+            StockInfo info = new StockInfo();
+
+            string url = string.Format("{0}{1}/", Urls.Fundamentals, symbol);
+            HttpResponseMessage responseMessage = this.Client.GetAsync(url).Result;
+
+            string responseString = responseMessage.Content.ReadAsStringAsync().Result;
+            info = JsonConvert.DeserializeObject<StockInfo>(responseString);
+
+            return info;
         }
     }
 }

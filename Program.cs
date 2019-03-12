@@ -28,6 +28,12 @@ namespace RobinHood
                 var result = Session.Client.GetAsync(p.Instrument).Result;
                 string resultString = result.Content.ReadAsStringAsync().Result;
                 Instrument instrument = JsonConvert.DeserializeObject<Instrument>(resultString);
+                StockInfo stockInfo = Session.GetStockInfo(instrument.Symbol);
+
+
+                result = Session.Client.GetAsync(instrument.QuoteUrl).Result;
+                resultString = result.Content.ReadAsStringAsync().Result;
+                Quote quote = JsonConvert.DeserializeObject<Quote>(resultString);
 
             }
             catch(Exception e)

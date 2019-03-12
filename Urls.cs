@@ -13,6 +13,8 @@ namespace RobinHood
 
         public const string Positions = "/positions/";
 
+        public const string Fundamentals = "/fundamentals/";
+
         public Urls()
         {
         }
