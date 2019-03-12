@@ -25,6 +25,10 @@ namespace RobinHood
         [JsonProperty(PropertyName = "password")]
         public string Password { get; set; }
 
+        [JsonProperty(PropertyName = "mfa_code")]
+        public string MfaCode { get; set; }
+
+
         public LoginRequest()
         {
              
