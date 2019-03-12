@@ -7,7 +7,7 @@ using RobinHood.Properties;
 
 namespace RobinHood
 {
-    public class RobinHood : RestClient
+    public class RobinHood2 : RestClient
     {
 
         /// <summary>
@@ -22,7 +22,7 @@ namespace RobinHood
         /// <value>The login.</value>
         private LoginRequest Login { get; set; }
 
-        public RobinHood(HttpClient client) : base(client, Settings.Default.BaseWebsite)
+        public RobinHood2(HttpClient client) : base(client, Settings.Default.BaseWebsite)
         {
         }
 

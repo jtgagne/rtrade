@@ -56,9 +56,13 @@
     <Compile Include="CryptoModels\Currency.cs" />
     <Compile Include="CryptoModels\Holding.cs" />
     <Compile Include="CryptoModels\CostBases.cs" />
+    <Compile Include="Properties\Settings.Designer.cs" />
+    <Compile Include="RestClient.cs" />
+    <Compile Include="RobinHood2.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
+    <None Include="Properties\Settings.settings" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Models\" />
