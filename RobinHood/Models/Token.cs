@@ -13,7 +13,7 @@ namespace RobinHood
         public string AccessToken { get; set; }
 
         [JsonProperty(PropertyName = "expires_in")]
-        public string ExpiresIn { get; set; }
+        public int ExpiresIn { get; set; }
 
         [JsonProperty(PropertyName = "token_type")]
         public string TokenType { get; set; }
@@ -26,6 +26,9 @@ namespace RobinHood
 
         [JsonProperty(PropertyName = "mfa_code")]
         public string MfaCode { get; set; }
+
+        [JsonProperty(PropertyName = "mfa_required")]
+        public bool MfaRequired { get; set; }
 
         [JsonProperty(PropertyName = "backup_code")]
         public string BackupCode { get; set; }
