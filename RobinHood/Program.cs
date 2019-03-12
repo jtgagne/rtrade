@@ -15,6 +15,7 @@ namespace RobinHood
         {
             try
             {
+                // one thing
                 Session = new RobinHood();
                 Session.Authenticate();
                 Session.LoadPositions();
